@@ -1,8 +1,8 @@
 {
   "name": "xml-decorators",
-  "version": "1.0.6",
+  "version": "2.0.0",
   "description": "Decorators for xml serialization",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "pretest": "npm run build",

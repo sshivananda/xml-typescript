@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
+    "outDir": "./dist/",
     "module": "commonjs",
-    "target": "es5",
+    "target": "ES2017",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "noUnusedLocals": true,
@@ -10,16 +11,15 @@
     "strictNullChecks": true,
     "skipLibCheck": true,
     "pretty": true,
-    "lib": ["es6"]
-  },
-  "include": [
-    "lib/**/*",
-    "test/**/*"
-  ],
-  "files": [
-    "index.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "rootDir": "./",
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+  }
 }
