@@ -27,19 +27,19 @@ export class Person {
     namespace: PERSON_NS,
     name: 'hobby'
   })
-  private hobbies: Hobby[];
+  private hobbies: Hobby[] = [];
 
   @XMLChild({
     namespace: PERSON_NS,
     stripPluralS: true
   })
-  private friends: Person[];
+  private friends: Person[] = [];
 
   @XMLChild({
     name: 'pet',
     implicitStructure: 'pets.$'
   })
-  private pets: string[];
+  private pets: string[] = [];
 
   constructor(firstname: string,
               lastname: string,

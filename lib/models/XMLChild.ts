@@ -1,14 +1,13 @@
 import 'es6-shim';
-import {XMLElement} from "./XMLElement";
+import { XMLElement } from "./XMLElement";
 import * as _ from "lodash";
-import {ns} from "../utils";
-import {IXMLChildOptions} from "../interfaces/IXMLChildOptions";
-import {IFullXMLChildOptions} from "../interfaces/IFullXMLChildOptions";
-import {ICustomXMLChildOptions} from "../interfaces/ICustomXMLChildOptions";
-import {createCustomGetter} from "../utils";
-import {ISchemaOptions} from "../interfaces/ISchemaOptions";
+import { createCustomGetter, ns } from "../utils";
+import { IXMLChildOptions } from "../interfaces/IXMLChildOptions";
+import { IFullXMLChildOptions } from "../interfaces/IFullXMLChildOptions";
+import { ICustomXMLChildOptions } from "../interfaces/ICustomXMLChildOptions";
+import { ISchemaOptions } from "../interfaces/ISchemaOptions";
 
-type Tree = {name: string; attributes: {[name: string]: string}};
+interface Tree { name: string; attributes: { [name: string]: string }; }
 
 export class XMLChild {
 
@@ -20,15 +19,16 @@ export class XMLChild {
                   descriptor?: TypedPropertyDescriptor<any>): void {
 
     const element = XMLElement.getOrCreateIfNotExists(target);
-    const fullOptions = Object.assign({
+    const fullOptions = {
       getter(entity: any): any {
         if (descriptor && descriptor.get) {
           return descriptor.get.call(entity);
         }
 
         return entity[key];
-      }
-    }, options);
+      },
+      ...options,
+    };
 
     fullOptions.name = options.name || key;
 
@@ -44,9 +44,8 @@ export class XMLChild {
       throw new Error(`Either a getter or a value has to be defined for attribute "${options.name}".`);
     }
 
-    const fullOptions = Object.assign({
-      getter: createCustomGetter(options),
-    }, options);
+    const fullOptions = {
+      getter: createCustomGetter(options), ...options};
 
     return new XMLChild(fullOptions);
   }
@@ -58,7 +57,7 @@ export class XMLChild {
 
       if (schema !== void 0 && schema !== null) {
 
-        const structure: string|undefined = this.options.implicitStructure;
+        const structure: string | undefined = this.options.implicitStructure;
         if (structure) {
 
           // a schema can be an array or an object,
@@ -68,9 +67,9 @@ export class XMLChild {
         } else {
 
           if (entity === schema && this.options.nestedNamespace) {
-            let nsSchema = {};
+            const nsSchema = {};
 
-            for (let key in schema) {
+            for (const key in schema) {
               if (schema.hasOwnProperty(key)) {
                 nsSchema[ns(this.options.nestedNamespace, key)] = schema[key];
               }
@@ -116,16 +115,16 @@ export class XMLChild {
       throw new Error(`Structure '${structure}' is invalid`);
     }
 
-    let tree = this.getImplicitNodeTree(structure);
+    const tree = this.getImplicitNodeTree(structure);
     const indexOfPlaceholder = tree.findIndex(node => node.name === PLACEHOLDER);
     tree[indexOfPlaceholder].name = this.name;
 
     for (let i = 0; i < tree.length; i++) {
-      let node = tree[i];
+      const node = tree[i];
       if (!Array.isArray(target)) {
         if (!target[node.name]) {
           if (i !== indexOfPlaceholder) {
-            target[node.name] = {'@': node.attributes};
+            target[node.name] = { '@': node.attributes };
           } else {
             target[node.name] = [];
           }
@@ -140,7 +139,7 @@ export class XMLChild {
         if (Array.isArray(target)) {
           target.push(schema);
         } else {
-          target[node.name] = _.merge(schema, {'@': node.attributes});
+          target[node.name] = _.merge(schema, { '@': node.attributes });
         }
       }
     }
@@ -164,9 +163,9 @@ export class XMLChild {
     return tree;
   }
 
-  private getAttributes(attributeString: string): {[attrName: string]: string} {
+  private getAttributes(attributeString: string): { [attrName: string]: string } {
 
-    let attributes = {};
+    const attributes = {};
 
     if (attributeString) {
 

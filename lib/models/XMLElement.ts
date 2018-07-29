@@ -16,8 +16,8 @@ const META_KEY = 'xml:element';
 
 export class XMLElement {
 
-  private attributes: XMLAttribute[];
-  private children: XMLChild[];
+  private attributes: XMLAttribute[] = [];
+  private children: XMLChild[] = [];
   private root?: string;
 
   static serialize(entity: any): string;
@@ -41,8 +41,7 @@ export class XMLElement {
       ;
   }
 
-  static getSchema(entities: any[], schemaOptions?: ISchemaOptions): any;
-  static getSchema(entity: any, schemaOptions?: ISchemaOptions): any;
+  static getSchema(entities: any[] | any, schemaOptions?: ISchemaOptions): any;
   static getSchema(arg: any, schemaOptions: ISchemaOptions = {}): any {
 
     if (arg === void 0) return;
@@ -54,8 +53,7 @@ export class XMLElement {
     return this.processSchema(arg, false, schemaOptions);
   }
 
-  static getSchemaAsync(entities: any[], schemaOptions?: ISchemaOptions): Promise<any>;
-  static getSchemaAsync(entity: any, schemaOptions?: ISchemaOptions): Promise<any>;
+  static getSchemaAsync(entities: any[] | any, schemaOptions?: ISchemaOptions): Promise<any>;
   static getSchemaAsync(arg: any, schemaOptions: ISchemaOptions = {}): Promise<any> {
 
     const processAsync = (entity: any) => {
@@ -72,7 +70,7 @@ export class XMLElement {
     return processAsync(arg);
   }
 
-  static getXMLElement(target: any): XMLElement|undefined {
+  static getXMLElement(target: any): XMLElement | undefined {
 
     return Reflect.getMetadata(META_KEY, target);
   }
@@ -96,7 +94,7 @@ export class XMLElement {
 
   static annotate(target: any, options: IXMLElementOptions): void {
 
-    let element = this.getOrCreateIfNotExists(target);
+    const element = this.getOrCreateIfNotExists(target);
 
     element.root = options.root;
   }
