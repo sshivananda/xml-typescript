@@ -4,7 +4,7 @@ import {IXMLAttributeOptions} from "../interfaces/IXMLAttributeOptions";
 
 export function XMLAttribute(target: any, key: string, descriptor?: TypedPropertyDescriptor<any>): void;
 export function XMLAttribute(options: IXMLAttributeOptions): Function;
-export function XMLAttribute(...args: any[]): void|Function {
+export function XMLAttribute(...args: any[]): void | Function {
 
   if (args.length === 1) {
 

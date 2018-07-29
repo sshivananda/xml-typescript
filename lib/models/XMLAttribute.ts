@@ -1,8 +1,8 @@
-import {XMLElement} from "./XMLElement";
-import {IXMLAttributeOptions} from "../interfaces/IXMLAttributeOptions";
-import {IFullXMLAttributeOptions} from "../interfaces/IFullXMLAttributeOptions";
-import {ICustomXMLAttributeOptions} from "../interfaces/ICustomXMLAttributeOptions";
-import {createCustomGetter} from "../utils";
+import { XMLElement } from "./XMLElement";
+import { IXMLAttributeOptions } from "../interfaces/IXMLAttributeOptions";
+import { IFullXMLAttributeOptions } from "../interfaces/IFullXMLAttributeOptions";
+import { ICustomXMLAttributeOptions } from "../interfaces/ICustomXMLAttributeOptions";
+import { createCustomGetter } from "../utils";
 
 export class XMLAttribute {
 
@@ -14,14 +14,15 @@ export class XMLAttribute {
                   descriptor?: TypedPropertyDescriptor<any>): void {
 
     const element = XMLElement.getOrCreateIfNotExists(target);
-    const fullOptions = Object.assign({
+    const fullOptions = {
       getter(entity: any): any {
         if (descriptor && descriptor.get) {
           return descriptor.get.call(entity);
         }
         return entity[key];
-      }
-    }, options);
+      },
+      ...options,
+    };
 
     fullOptions.name = options.name || key;
 
@@ -37,10 +38,9 @@ export class XMLAttribute {
       throw new Error(`Either a getter or a value has to be defined for attribute "${options.name}".`);
     }
 
-    const fullOptions = Object.assign({
-      getter: createCustomGetter(options),
-    }, options);
-    
+    const fullOptions = {
+      getter: createCustomGetter(options), ...options};
+
     return new XMLAttribute(fullOptions);
   }
 
