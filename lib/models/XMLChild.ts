@@ -45,7 +45,8 @@ export class XMLChild {
     }
 
     const fullOptions = {
-      getter: createCustomGetter(options), ...options};
+      getter: createCustomGetter(options), ...options
+    };
 
     return new XMLChild(fullOptions);
   }
@@ -86,7 +87,7 @@ export class XMLChild {
     if (isAsync) {
 
       XMLElement.getSchemaAsync(entity, schemaOptions)
-        .then(schema => process(schema));
+        .then((schema: any) => process(schema));
     } else {
 
       process(XMLElement.getSchema(entity, schemaOptions));
@@ -123,11 +124,9 @@ export class XMLChild {
       const node = tree[i];
       if (!Array.isArray(target)) {
         if (!target[node.name]) {
-          if (i !== indexOfPlaceholder) {
-            target[node.name] = { '@': node.attributes };
-          } else {
-            target[node.name] = [];
-          }
+          target[node.name] = (i !== indexOfPlaceholder) ?
+            { '@': node.attributes } : [];
+
         }
         target = target[node.name];
       } else {

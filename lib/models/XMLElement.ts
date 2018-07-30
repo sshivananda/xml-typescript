@@ -37,7 +37,7 @@ export class XMLElement {
     const {root, entity} = this.getRootAndEntity(args);
 
     return this.getSchemaAsync(entity)
-      .then(schema => js2xmlparser.parse(root, schema, PARSER_OPTIONS))
+      .then((schema: any) => js2xmlparser.parse(root, schema, PARSER_OPTIONS))
       ;
   }
 

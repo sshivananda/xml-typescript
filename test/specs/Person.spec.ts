@@ -1,9 +1,9 @@
 import 'es6-shim';
-import {expect} from 'chai';
-import {Person, PERSON_NS} from "../models/Person";
-import {Hobby, HOBBY_NS} from "../models/Hobby";
-import {xml, xmlAttribute, xmlChild} from "../../index";
-import {ns, DEFAULT_ATTRIBUTE_PROPERTY} from "../../lib/utils";
+import { expect } from 'chai';
+import { Person, PERSON_NS } from "../models/Person";
+import { Hobby, HOBBY_NS } from "../models/Hobby";
+import { xml, xmlAttribute, xmlChild } from "../../index";
+import { ns, DEFAULT_ATTRIBUTE_PROPERTY } from "../../lib/utils";
 
 const elisa = new Person('Elisa', '_', 25);
 const robin = new Person('Robin', 'Buschmann', 29);
@@ -118,7 +118,7 @@ describe("Person", () => {
       it(`should result in the same schema value as schema from sync process`, () =>
         xml
           .getSchemaAsync(elisa)
-          .then(asyncSchema => expect(asyncSchema).to.deep.equal(schema))
+          .then((asyncSchema: any) => expect(asyncSchema).to.deep.equal(schema))
       );
 
     });
@@ -128,7 +128,7 @@ describe("Person", () => {
   describe("schema with options", () => {
 
     const ATTR_PROPERTY = 'attributes';
-    const OPTIONS = {attrContainerName: ATTR_PROPERTY};
+    const OPTIONS = { attrContainerName: ATTR_PROPERTY };
     const schema = xml.getSchema(elisa, OPTIONS);
 
     describe("attributes", () => {
@@ -207,7 +207,7 @@ describe("Person", () => {
       it(`should result in the same schema value as schema from sync process`, () =>
         xml
           .getSchemaAsync(elisa, OPTIONS)
-          .then(asyncSchema => expect(asyncSchema).to.deep.equal(schema))
+          .then((asyncSchema: any) => expect(asyncSchema).to.deep.equal(schema))
       );
 
     });
@@ -229,7 +229,7 @@ describe("Person", () => {
       it(`should be defined and of type string`, () =>
         xml
           .serializeAsync('great-person', elisa)
-          .then(result => {
+          .then((result: any) => {
 
             expect(result).not.to.be.undefined;
             expect(typeof result).to.equal('string');

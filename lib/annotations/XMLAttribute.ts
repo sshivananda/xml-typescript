@@ -2,9 +2,11 @@ import 'reflect-metadata';
 import {XMLAttribute as XMLAttributeModel} from "../models/XMLAttribute";
 import {IXMLAttributeOptions} from "../interfaces/IXMLAttributeOptions";
 
+type AnnotationFunction = (target: any, key: string, descriptor?: TypedPropertyDescriptor<any>) => void;
+
 export function XMLAttribute(target: any, key: string, descriptor?: TypedPropertyDescriptor<any>): void;
-export function XMLAttribute(options: IXMLAttributeOptions): Function;
-export function XMLAttribute(...args: any[]): void | Function {
+export function XMLAttribute(options: IXMLAttributeOptions): AnnotationFunction;
+export function XMLAttribute(...args: any[]): void | AnnotationFunction {
 
   if (args.length === 1) {
 
